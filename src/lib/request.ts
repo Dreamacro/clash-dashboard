@@ -83,7 +83,7 @@ export async function getInstance () {
 
     instance = axios.create({
         baseURL: `http://${hostname}:${port}`,
-        headers: { Authorization: `Bearer ${secret}` }
+        headers: secret ? { Authorization: `Bearer ${secret}` } : {}
     })
 
     return instance
