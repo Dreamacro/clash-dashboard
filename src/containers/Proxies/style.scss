@@ -1,18 +1,55 @@
 @import '~@styles/variables';
 
 .proxies-list {
-    margin: 10px 0;
+    --item-width: calc(100% / (var(--columns) + 1));
+    --gap: calc(var(--item-width) / var(--columns));
+
     display: flex;
+    margin-right: calc(-1 * var(--gap));
+    padding-bottom: 100px;
     flex-wrap: wrap;
+    align-content: flex-start;
     list-style: none;
+    height: 2000px;
 
-    li {
-        margin: 8px 0;
-        margin-right: 15px;
+    @include response(xxl) {
+        --columns: 12;
+    }
 
-        &:nth-child(6n) {
-            margin-right: 0;
-        }
+    @include response(xl) {
+        --columns: 10;
+    }
+
+    @include response(lg) {
+        --columns: 8;
+    }
+
+    @include response(md) {
+        --columns: 7;
+    }
+
+    @include response(sm) {
+        --columns: 6;
+    }
+
+    @include response(xs) {
+        --columns: 5;
+    }
+
+    @include response(xxs) {
+        --columns: 4;
+    }
+
+    @include response(tiny) {
+        --columns: 3;
+    }
+
+    > li {
+        display: inline-block;
+        width: var(--item-width);
+        margin-right: var(--gap);
+        flex-shrink: 0;
+        margin-bottom: 10px;
     }
 }
 

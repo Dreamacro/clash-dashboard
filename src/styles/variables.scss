@@ -20,3 +20,51 @@ $color-orange: #e6a23c;
 $color-red: #f56c6c;
 $color-black-light: #546b87;
 $color-black: #000;
+
+// response break point
+@mixin response($name) {
+    @if map-has-key($breakpoints, $name) {
+        @media #{inspect(map-get($breakpoints, $name))} {
+            @content;
+        }
+    }
+}
+
+$breakpoints: (
+    'tiny': (
+        max-width: 680px
+    ),
+    'xxs': (
+        max-width: 760px
+    ),
+    'xs': (
+        max-width: 860px
+    ),
+    'sm': (
+        max-width: 960px
+    ),
+    'md': (
+        min-width: 961px
+    )
+    and
+    (
+        max-width: 1340px
+    ),
+    'lg': (
+        min-width: 1341px
+    )
+    and
+    (
+        max-width: 1600px
+    ),
+    'xl': (
+        min-width: 1601px
+    )
+    and
+    (
+        max-width: 2000px
+    ),
+    'xxl': (
+        min-width: 2001px
+    )
+);

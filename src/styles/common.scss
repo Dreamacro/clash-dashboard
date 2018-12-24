@@ -19,6 +19,17 @@ body {
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    ::-webkit-scrollbar {
+        z-index: 11;
+        width: 5px;
+        background: transparent;
+
+        &-thumb {
+            border-radius: 5px;
+            background: #2c8af8;
+        }
+    }
 }
 
 .app {
@@ -33,6 +44,7 @@ body {
 .page-container {
     width: 100%;
     height: 100vh;
+    padding-left: 10px;
     overflow-y: scroll;
 }
 
@@ -42,7 +54,6 @@ body {
     padding-bottom: 30px;
     width: 100%;
     height: 100vh;
-    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;

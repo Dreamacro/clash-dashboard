@@ -2,14 +2,14 @@
 
 .proxy-item {
     position: relative;
-    padding: 10px;
+    width: 100%;
     height: 110px;
-    width: 110px;
+    padding: 10px;
     border-radius: 4px;
     background: $color-white;
     user-select: none;
     cursor: default;
-    box-shadow: 0 0 20px rgba($color-primary-dark, 0.2);
+    box-shadow: 2px 5px 20px -3px rgba($color-primary-dark, 0.2);
     transition: all 300ms ease;
 
     .proxy-type {
@@ -23,8 +23,9 @@
         max-height: 30px;
         margin-top: 10px;
         color: $color-primary-darken;
-        font-size: 12px;
+        font-size: 10px;
         overflow: hidden;
+        word-break: break-all;
     }
 
     .proxy-delay {
@@ -47,7 +48,7 @@
     }
 
     &:hover {
-        box-shadow: 0 10px 20px rgba($color-primary-darken, 0.4);
+        box-shadow: 0 14px 20px -4px rgba($color-primary-darken, 0.4);
 
         .proxy-editor {
             opacity: 1;
