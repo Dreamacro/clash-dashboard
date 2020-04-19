@@ -39,7 +39,7 @@ export default function Proxies () {
     }
 
     const { current: sort, next } = useRound(
-        [sortType.None, sortType.Asc, sortType.Desc]
+        [sortType.Asc, sortType.Desc, sortType.None]
     )
     const proxies = useMemo(() => {
         switch (sort) {
