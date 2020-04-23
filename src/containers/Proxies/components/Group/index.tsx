@@ -13,14 +13,14 @@ export function Group (props: GroupProps) {
     const { data: Config } = containers.useConfig()
     const { config } = props
 
-    async function handleChangeProxySelected (group: string, name: string) {
+    async function handleChangeProxySelected (name: string) {
         await changeProxySelected(props.config.name, name)
         await fetch()
         if (Config.breakConnections) {
             const list: string[] = []
             const snapshot = await getConnections()
             for (const connection of snapshot.data.connections) {
-                if (connection.chains.includes(group)) {
+                if (connection.chains.includes(props.config.name)) {
                     list.push(connection.id)
                 }
             }
@@ -51,7 +51,7 @@ export function Group (props: GroupProps) {
                 <Tags
                     className="proxy-group-tags"
                     data={config.all}
-                    onClick={proxyName => handleChangeProxySelected(config.name, proxyName)}
+                    onClick={handleChangeProxySelected}
                     shouldError={shouldError}
                     select={config.now}
                     canClick={canClick}
