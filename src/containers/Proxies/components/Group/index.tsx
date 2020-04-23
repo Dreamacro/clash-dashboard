@@ -13,14 +13,14 @@ export function Group (props: GroupProps) {
     const { data: Config } = containers.useConfig()
     const { config } = props
 
-    async function handleChangeProxySelected (name: string) {
+    async function handleChangeProxySelected (group: string, name: string) {
         await changeProxySelected(props.config.name, name)
         await fetch()
         if (Config.breakConnections) {
             const list: string[] = []
             const snapshot = await getConnections()
             for (const connection of snapshot.data.connections) {
-                if (connection.chains.includes(name)) {
+                if (connection.chains.includes(group)) {
                     list.push(connection.id)
                 }
             }
@@ -44,14 +44,14 @@ export function Group (props: GroupProps) {
     return (
         <div className="proxy-group">
             <div className="proxy-group-part">
-                <span className="proxy-group-name">{ config.name }</span>
-                <Tag className="proxy-group-type">{ config.type }</Tag>
+                <span className="proxy-group-name">{config.name}</span>
+                <Tag className="proxy-group-type">{config.type}</Tag>
             </div>
             <div className="proxy-group-tags-container">
                 <Tags
                     className="proxy-group-tags"
                     data={config.all}
-                    onClick={handleChangeProxySelected}
+                    onClick={proxyName => handleChangeProxySelected(config.name, proxyName)}
                     shouldError={shouldError}
                     select={config.now}
                     canClick={canClick}
