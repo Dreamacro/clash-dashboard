@@ -44,8 +44,8 @@ export function Group (props: GroupProps) {
     return (
         <div className="proxy-group">
             <div className="proxy-group-part">
-                <span className="proxy-group-name">{config.name}</span>
-                <Tag className="proxy-group-type">{config.type}</Tag>
+                <span className="proxy-group-name">{ config.name }</span>
+                <Tag className="proxy-group-type">{ config.type }</Tag>
             </div>
             <div className="proxy-group-tags-container">
                 <Tags
