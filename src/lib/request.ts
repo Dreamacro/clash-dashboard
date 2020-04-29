@@ -116,10 +116,18 @@ export const getInstance = createAsyncSingleton(async () => {
         secret
     } = await getExternalControllerConfig()
 
-    return axios.create({
+    const client = axios.create({
         baseURL: `//${hostname}:${port}`,
         headers: secret ? { Authorization: `Bearer ${secret}` } : {}
     })
+
+    // Note: encode hashtags in proxy name to prevent browsers from removing them
+    client.interceptors.request.use(config => {
+        const { url } = config
+        return url ? { ...config, url: url.replace(/#/g, '%23') } : config
+    })
+
+    return client
 })
 
 export async function getConfig () {
