@@ -23,6 +23,11 @@ jobs:
       run: |
         npm ci
         npm run build
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: clash-dashboard
+        path: dist/
     - name: Deploy
       uses: crazy-max/ghaction-github-pages@v1
       with:
