@@ -93,6 +93,7 @@ function useData () {
 
 function useAPIInfo () {
     const [data, set] = useObject<Models.APIInfo>({
+        protocol: 'http:',
         hostname: '127.0.0.1',
         port: '9090',
         secret: ''
@@ -104,7 +105,8 @@ function useAPIInfo () {
     }
 
     async function update (info: Models.APIInfo) {
-        const { hostname, port, secret } = info
+        const { protocol, hostname, port, secret } = info
+        setLocalStorageItem('externalControllerProtocol', protocol)
         setLocalStorageItem('externalControllerAddr', hostname)
         setLocalStorageItem('externalControllerPort', port)
         setLocalStorageItem('secret', secret)

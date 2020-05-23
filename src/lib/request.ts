@@ -92,32 +92,35 @@ export async function getExternalControllerConfig () {
         const info = await jsBridge.getAPIInfo()
 
         return {
+            protocol: info.protocol,
             hostname: info.host,
             port: info.port,
             secret: info.secret
         }
     }
 
+    const protocol = getLocalStorageItem('externalControllerProtocol', 'http:')
     const hostname = getLocalStorageItem('externalControllerAddr', '127.0.0.1')
     const port = getLocalStorageItem('externalControllerPort', '9090')
     const secret = getLocalStorageItem('secret', '')
 
-    if (!hostname || !port) {
-        throw new Error('can\'t get hostname or port')
+    if (!protocol || !hostname || !port) {
+        throw new Error('can\'t get protocol, hostname or port')
     }
 
-    return { hostname, port, secret }
+    return { protocol, hostname, port, secret }
 }
 
 export const getInstance = createAsyncSingleton(async () => {
     const {
+        protocol,
         hostname,
         port,
         secret
     } = await getExternalControllerConfig()
 
     return axios.create({
-        baseURL: `//${hostname}:${port}`,
+        baseURL: `${protocol}//${hostname}:${port}`,
         headers: secret ? { Authorization: `Bearer ${secret}` } : {}
     })
 })
@@ -221,7 +224,7 @@ export const getLogsStreamReader = createAsyncSingleton(async function () {
     const version = err ? 'unkonwn version' : data.data.version
     const useWebsocket = !!version || true
 
-    const logUrl = `${location.protocol}//${externalController.hostname}:${externalController.port}/logs?level=${config['log-level']}`
+    const logUrl = `${externalController.protocol}//${externalController.hostname}:${externalController.port}/logs?level=${config['log-level']}`
     return new StreamReader<Log>({ url: logUrl, bufferLength: 200, token: externalController.secret, useWebsocket })
 })
 
@@ -231,6 +234,6 @@ export const getConnectionStreamReader = createAsyncSingleton(async function () 
     const version = err ? 'unkonwn version' : data.data.version
 
     const useWebsocket = !!version || true
-    const logUrl = `${location.protocol}//${externalController.hostname}:${externalController.port}/connections`
+    const logUrl = `${externalController.protocol}//${externalController.hostname}:${externalController.port}/connections`
     return new StreamReader<Snapshot>({ url: logUrl, bufferLength: 200, token: externalController.secret, useWebsocket })
 })

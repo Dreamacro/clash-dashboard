@@ -139,7 +139,7 @@ export class JsBridge {
     }
 
     public getAPIInfo () {
-        return this.callHandler<{ host: string, port: string, secret: string }>('apiInfo')
+        return this.callHandler<{ protocol: string, host: string, port: string, secret: string }>('apiInfo')
     }
 
     public setPasteboard (data: string) {

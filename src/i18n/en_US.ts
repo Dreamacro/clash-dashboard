@@ -31,6 +31,7 @@ export default {
         externalControllerSetting: {
             title: 'External Controller',
             note: 'Please note that modifying this configuration will only configure Dashboard. Will not modify your Clash configuration file. Please make sure that the external controller address matches the address in the Clash configuration file, otherwise, Dashboard will not be able to connect to Clash.',
+            protocol: 'Protocol',
             host: 'Host',
             port: 'Port',
             secret: 'Secret'

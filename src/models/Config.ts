@@ -70,6 +70,7 @@ export interface ClashXData {
 }
 
 export interface APIInfo {
+    protocol: string
     hostname: string
     port: string
     secret?: string

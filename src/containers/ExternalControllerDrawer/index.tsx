@@ -10,6 +10,7 @@ export default function ExternalController () {
     const { data: info, update, fetch } = containers.useAPIInfo()
     const { unauthorized: { hide, visible } } = containers.useData()
     const [value, set] = useObject({
+        protocol: '',
         hostname: '',
         port: '',
         secret: ''
@@ -20,12 +21,12 @@ export default function ExternalController () {
     }, [])
 
     useEffect(() => {
-        set({ hostname: info.hostname, port: info.port, secret: info.secret })
+        set({ protocol: info.protocol, hostname: info.hostname, port: info.port, secret: info.secret })
     }, [info])
 
     function handleOk () {
-        const { hostname, port, secret } = value
-        update({ hostname, port, secret })
+        const { protocol, hostname, port, secret } = value
+        update({ protocol, hostname, port, secret })
     }
 
     return (
@@ -40,6 +41,16 @@ export default function ExternalController () {
                 <p>{t('externalControllerSetting.note')}</p>
             </Alert>
             <Row gutter={24} align="middle">
+                <Col span={4} className="title">{t('externalControllerSetting.protocol')}</Col>
+                <Col span={20} className="form">
+                    <Input
+                        align="left"
+                        inside={true}
+                        value={value.protocol}
+                        onChange={protocol => set('protocol', protocol)}
+                    />
+                </Col>
+            </Row><Row gutter={24} align="middle">
                 <Col span={4} className="title">{t('externalControllerSetting.host')}</Col>
                 <Col span={20} className="form">
                     <Input

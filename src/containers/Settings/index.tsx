@@ -79,6 +79,7 @@ export default function Settings () {
     }
 
     const {
+        protocol: externalControllerProtocol,
         hostname: externalControllerHost,
         port: externalControllerPort
     } = apiInfo
@@ -190,7 +191,7 @@ export default function Settings () {
                         </Col>
                         <Col className="external-controller" span={10}>
                             <span className="modify-btn" onClick={show}>
-                                {`${externalControllerHost}:${externalControllerPort}`}
+                                {`${externalControllerProtocol}//${externalControllerHost}:${externalControllerPort}`}
                             </span>
                         </Col>
                     </Col>
