@@ -80,6 +80,7 @@ export default function ExternalController () {
                         inside={true}
                         value={value.secret}
                         onChange={secret => set('secret', secret)}
+                        type="password"
                     />
                 </Col>
             </Row>
