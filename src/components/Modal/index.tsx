@@ -67,24 +67,26 @@ export function Modal (props: ModalProps) {
             ref={maskRef}
             onClick={handleMaskClick}
         >
-            <div
-                className={classnames('modal', `modal-${size}`, className)}
-                style={style}
-            >
-                <div className="modal-title">{title}</div>
+            <form>
                 <div
-                    className={classnames('modal-body', bodyClassName)}
-                    style={bodyStyle}
-                >{children}</div>
-                {
-                    footer && (
-                        <div className="footer">
-                            <Button onClick={() => onClose()}>取 消</Button>
-                            <Button type="primary" onClick={() => onOk()}>确 定</Button>
-                        </div>
-                    )
-                }
-            </div>
+                    className={classnames('modal', `modal-${size}`, className)}
+                    style={style}
+                >
+                    <div className="modal-title">{title}</div>
+                    <div
+                        className={classnames('modal-body', bodyClassName)}
+                        style={bodyStyle}
+                    >{children}</div>
+                    {
+                        footer && (
+                            <div className="footer">
+                                <Button onClick={() => onClose()}>取 消</Button>
+                                <Button type="primary" onClick={() => onOk()}>确 定</Button>
+                            </div>
+                        )
+                    }
+                </div>
+            </form>
         </div>
     )
 

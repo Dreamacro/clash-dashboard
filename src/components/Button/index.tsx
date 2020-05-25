@@ -12,12 +12,14 @@ interface ButtonProps extends BaseComponentProps {
 export function Button (props: ButtonProps) {
     const { type = 'normal', onClick = noop, children, className, style } = props
     const classname = classnames('button', `button-${type}`, className)
+    const buttonType = type === 'primary' ? 'submit' : 'button'
 
     return (
         <button
             className={classname}
             style={style}
             onClick={onClick}
+            type={buttonType}
         >{children}</button>
     )
 }
