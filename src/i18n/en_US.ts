@@ -27,6 +27,11 @@ export default {
             rules: 'Rules',
             direct: 'Direct'
         },
+        reloadConfig:{
+            btn:'reload config',
+            success:'reload success',
+            fail:'reload fail'
+        },
         versionString: 'Current ClashX is the latest version：{{version}}',
         checkUpdate: 'Check Update',
         externalControllerSetting: {

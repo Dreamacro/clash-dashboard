@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { Header, Card, Row, Col, Switch, ButtonSelect, ButtonSelectOptions, Input, Icon } from '@components'
+import { Header, Card, Row, Col, Switch, ButtonSelect, ButtonSelectOptions, Input, Icon, Button, showMessage } from '@components'
 import { useI18n, useClashXData, useAPIInfo, useGeneral, useIdentity } from '@stores'
-import { updateConfig } from '@lib/request'
+import { updateConfig, reloadConfig } from '@lib/request'
 import { useObject } from '@lib/hook'
 import { isClashX, jsBridge } from '@lib/jsBridge'
 import { Lang } from '@i18n'
@@ -66,6 +66,14 @@ export default function Settings () {
     async function handleAllowLanChange (state: boolean) {
         await updateConfig({ 'allow-lan': state })
         await fetchGeneral()
+    }
+    async function handleReloadConfig () {
+        let resp = await reloadConfig({})
+        if (resp.status === 204) {
+            showMessage({ content: t('reloadConfig.success'), type: "success" })
+        } else {
+            showMessage({ content: t('reloadConfig.fail'), type: "error" })
+        }
     }
 
     const {
@@ -184,6 +192,15 @@ export default function Settings () {
                             </span>
                         </Col>
                     </Col>
+                </Row>
+                <Row gutter={24} align="middle">
+                    <Col span={12}>
+                        <Col span={14} offset={1}>
+                            <Button type={"primary"} onClick={handleReloadConfig}>{t('reloadConfig.btn')}</Button>
+                        </Col>
+
+                    </Col>
+
                 </Row>
             </Card>
 

@@ -13,6 +13,10 @@ export interface Config {
     mode: string
     'log-level': string
 }
+export interface ReloadConfig{
+    force:boolean
+    path:string
+}
 
 export interface Rules {
     rules: Rule[]
@@ -130,6 +134,10 @@ export async function getConfig () {
 export async function updateConfig (config: Partial<Config>) {
     const req = await getInstance()
     return req.patch<void>('configs', config)
+}
+export async function reloadConfig(params:Partial<ReloadConfig>){
+    const req= await getInstance()
+    return req.put<void>('configs',params)
 }
 
 export async function getRules () {

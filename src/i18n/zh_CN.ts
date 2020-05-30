@@ -27,6 +27,12 @@ export default {
             rules: '规则',
             direct: '直连'
         },
+        reloadConfig:{
+            btn:'重载配置',
+            success:'重载成功',
+            fail:'重载失败'
+        },
+
         versionString: '当前 ClashX 已是最新版本：{{version}}',
         checkUpdate: '检查更新',
         externalControllerSetting: {
