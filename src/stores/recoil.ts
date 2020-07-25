@@ -163,6 +163,7 @@ export function useGeneral () {
         set({
             port: data.port,
             socksPort: data['socks-port'],
+            mixedPort: data['mixed-port'],
             redirPort: data['redir-port'],
             mode: data.mode.toLowerCase() as Models.Data['general']['mode'],
             logLevel: data['log-level'],

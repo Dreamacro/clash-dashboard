@@ -9,6 +9,7 @@ export interface Config {
     port: number
     'socks-port': number
     'redir-port': number
+    'mixed-port': number
     'allow-lan': boolean
     mode: string
     'log-level': string
@@ -160,7 +161,7 @@ export async function getProxyProviders () {
             return (status >= 200 && status < 300) || status === 404
         }
     })
-    // compatible old version
+        // compatible old version
         .then(resp => {
             if (resp.status === 404) {
                 resp.data = { providers: {} }

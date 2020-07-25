@@ -18,6 +18,7 @@ export default {
             proxyMode: 'Mode',
             socks5ProxyPort: 'Socks5 proxy port',
             httpProxyPort: 'HTTP proxy port',
+            mixedProxyPort: 'Mixed proxy port',
             externalController: 'External controller'
         },
         values: {

@@ -20,7 +20,8 @@ export default function Settings () {
     const { t } = useTranslation('Settings')
     const [info, set] = useObject({
         socks5ProxyPort: 7891,
-        httpProxyPort: 7890
+        httpProxyPort: 7890,
+        mixedProxyPort: 0
     })
 
     useEffect(() => {
@@ -31,6 +32,7 @@ export default function Settings () {
     useEffect(() => {
         set('socks5ProxyPort', general.socksPort)
         set('httpProxyPort', general.port)
+        set('mixedProxyPort', general.mixedPort)
     }, [general])
 
     async function handleProxyModeChange (mode: string) {
@@ -59,6 +61,11 @@ export default function Settings () {
 
     async function handleSocksPortSave () {
         await updateConfig({ 'socks-port': info.socks5ProxyPort })
+        await fetchGeneral()
+    }
+
+    async function handleMixedPortSave () {
+        await updateConfig({ 'mixed-port': info.mixedProxyPort })
         await fetchGeneral()
     }
 
@@ -175,6 +182,21 @@ export default function Settings () {
                             />
                         </Col>
                     </Col>
+                    <Col span={12}>
+                        <Col span={14} offset={1}>
+                            <span className="label">{t('labels.mixedProxyPort')}</span>
+                        </Col>
+                        <Col span={8}>
+                            <Input
+                                disabled={clashXData.isClashX}
+                                value={info.mixedProxyPort}
+                                onChange={mixedProxyPort => set('mixedProxyPort', +mixedProxyPort)}
+                                onBlur={handleMixedPortSave}
+                            />
+                        </Col>
+                    </Col>
+                </Row>
+                <Row>
                     <Col span={12}>
                         <Col span={12} offset={1}>
                             <span className="label">{t('labels.externalController')}</span>

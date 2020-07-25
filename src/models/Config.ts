@@ -80,6 +80,11 @@ export interface Data {
         socksPort?: number
 
         /**
+         * mixed porxy port
+         */
+        mixedPort?: number
+
+        /**
          * redir proxy port
          */
         redirPort?: number
