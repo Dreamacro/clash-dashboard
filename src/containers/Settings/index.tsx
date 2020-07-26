@@ -81,7 +81,8 @@ export default function Settings () {
     const proxyModeOptions: ButtonSelectOptions[] = [
         { label: t('values.global'), value: 'Global' },
         { label: t('values.rules'), value: 'Rule' },
-        { label: t('values.direct'), value: 'Direct' }
+        { label: t('values.direct'), value: 'Direct' },
+        { label: t('values.script'), value: 'Script' }
     ]
 
     return (

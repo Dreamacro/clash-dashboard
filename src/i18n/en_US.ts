@@ -25,7 +25,8 @@ export default {
             en: 'English',
             global: 'Global',
             rules: 'Rules',
-            direct: 'Direct'
+            direct: 'Direct',
+            script: 'Script'
         },
         versionString: 'Current ClashX is the latest version：{{version}}',
         checkUpdate: 'Check Update',
