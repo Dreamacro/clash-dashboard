@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import classnames from 'classnames'
 import capitalize from 'lodash/capitalize'
 import { Header, Card, Row, Col, Switch, ButtonSelect, ButtonSelectOptions, Input, Icon } from '@components'
-import { useI18n, useClashXData, useAPIInfo, useGeneral, useIdentity } from '@stores'
+import { useI18n, useClashXData, useAPIInfo, useGeneral, useIdentity, useVersion } from '@stores'
 import { updateConfig } from '@lib/request'
 import { useObject } from '@lib/hook'
 import { jsBridge } from '@lib/jsBridge'
@@ -12,6 +12,7 @@ import './style.scss'
 const languageOptions: ButtonSelectOptions[] = [{ label: '中文', value: 'zh_CN' }, { label: 'English', value: 'en_US' }]
 
 export default function Settings () {
+    const { premium } = useVersion()
     const { data: clashXData, update: fetchClashXData } = useClashXData()
     const { general, update: fetchGeneral } = useGeneral()
     const { set: setIdentity } = useIdentity()
@@ -81,9 +82,11 @@ export default function Settings () {
     const proxyModeOptions: ButtonSelectOptions[] = [
         { label: t('values.global'), value: 'Global' },
         { label: t('values.rules'), value: 'Rule' },
-        { label: t('values.direct'), value: 'Direct' },
-        { label: t('values.script'), value: 'Script' }
+        { label: t('values.direct'), value: 'Direct' }
     ]
+    if (premium) {
+        proxyModeOptions.push({ label: t('values.script'), value: 'Script' })
+    }
 
     return (
         <div className="page">
