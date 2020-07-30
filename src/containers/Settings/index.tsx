@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import classnames from 'classnames'
 import capitalize from 'lodash/capitalize'
 import { Header, Card, Row, Col, Switch, ButtonSelect, ButtonSelectOptions, Input, Icon } from '@components'
@@ -79,14 +79,14 @@ export default function Settings () {
         systemProxy
     } = clashXData
 
-    const proxyModeOptions: ButtonSelectOptions[] = [
-        { label: t('values.global'), value: 'Global' },
-        { label: t('values.rules'), value: 'Rule' },
-        { label: t('values.direct'), value: 'Direct' }
-    ]
-    if (premium) {
-        proxyModeOptions.push({ label: t('values.script'), value: 'Script' })
-    }
+    const proxyModeOptions = useMemo(() => {
+        const options = [
+            { label: t('values.global'), value: 'Global' },
+            { label: t('values.rules'), value: 'Rule' },
+            { label: t('values.direct'), value: 'Direct' }
+        ]
+        return premium ? [...options, { label: t('values.script'), value: 'Script' }] : options
+    }, [t, premium])
 
     return (
         <div className="page">
