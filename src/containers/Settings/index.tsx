@@ -32,7 +32,7 @@ export default function Settings () {
     useEffect(() => {
         set('socks5ProxyPort', general.socksPort)
         set('httpProxyPort', general.port)
-        set('mixedProxyPort', general.mixedPort)
+        set('mixedProxyPort', general.mixedPort ?? 0)
     }, [general])
 
     async function handleProxyModeChange (mode: string) {

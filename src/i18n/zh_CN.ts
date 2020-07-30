@@ -18,7 +18,7 @@ export default {
             proxyMode: '代理模式',
             socks5ProxyPort: 'Socks5 代理端口',
             httpProxyPort: 'HTTP 代理端口',
-            mixedProxyPort: '混合（HTTP+Socks5）代理端口',
+            mixedProxyPort: '混合代理端口',
             externalController: '外部控制设置'
         },
         values: {
