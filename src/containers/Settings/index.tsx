@@ -85,7 +85,10 @@ export default function Settings () {
             { label: t('values.rules'), value: 'Rule' },
             { label: t('values.direct'), value: 'Direct' }
         ]
-        return premium ? [...options, { label: t('values.script'), value: 'Script' }] : options
+        if (premium) {
+            options.push({ label: t('values.script'), value: 'Script' })
+        }
+        return options
     }, [t, premium])
 
     return (
