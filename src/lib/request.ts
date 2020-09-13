@@ -115,7 +115,7 @@ export async function getExternalControllerConfig () {
     const hostname = getLocalStorageItem('externalControllerAddr', window.location.hostname)
     const port = getLocalStorageItem('externalControllerPort', window.location.port)
     const secret = getLocalStorageItem('secret', '')
-    const path = getLocalStorageItem('path', '')
+    const path = getLocalStorageItem('path', window.location.pathname)
     const protocol = getLocalStorageItem('protocol', window.location.protocol)
 
     if (!hostname || !port) {

@@ -247,12 +247,18 @@ export function useClashXData () {
 
 export const apiData = atom({
     key: 'apiData',
-    default: {
+    default: isClashX() ? {
         hostname: '127.0.0.1',
         port: '9090',
         secret: '',
         path: '',
         protocol: ''
+    } : {
+        hostname: location.hostname,
+        port: location.port,
+        secret: '',
+        path: location.pathname,
+        protocol: location.protocol
     }
 })
 
