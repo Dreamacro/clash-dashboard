@@ -12,7 +12,9 @@ export default function ExternalController () {
     const [value, set] = useObject({
         hostname: '',
         port: '',
-        secret: ''
+        secret: '',
+        path: '',
+        protocol: ''
     })
 
     useEffect(() => {
@@ -20,12 +22,12 @@ export default function ExternalController () {
     }, [])
 
     useEffect(() => {
-        set({ hostname: info.hostname, port: info.port, secret: info.secret })
+        set({ hostname: info.hostname, port: info.port, secret: info.secret, path: info.path, protocol: info.protocol })
     }, [info])
 
     function handleOk () {
-        const { hostname, port, secret } = value
-        update({ hostname, port, secret })
+        const { hostname, port, secret, path, protocol } = value
+        update({ hostname, port, secret, path, protocol })
     }
 
     return (
@@ -51,6 +53,17 @@ export default function ExternalController () {
                 </Col>
             </Row>
             <Row gutter={24} align="middle">
+                <Col span={4} className="title">{t('externalControllerSetting.protocol')}</Col>
+                <Col span={20} className="form">
+                    <Input
+                        align="left"
+                        inside={true}
+                        value={value.protocol}
+                        onChange={protocol => set('protocol', protocol)}
+                    />
+                </Col>
+            </Row>
+            <Row gutter={24} align="middle">
                 <Col span={4} className="title">{t('externalControllerSetting.port')}</Col>
                 <Col span={20} className="form">
                     <Input
@@ -69,6 +82,17 @@ export default function ExternalController () {
                         inside={true}
                         value={value.secret}
                         onChange={secret => set('secret', secret)}
+                    />
+                </Col>
+            </Row>
+            <Row gutter={24} align="middle">
+                <Col span={4} className="title">{t('externalControllerSetting.path')}</Col>
+                <Col span={20} className="form">
+                    <Input
+                        align="left"
+                        inside={true}
+                        value={value.path}
+                        onChange={path => set('path', path)}
                     />
                 </Col>
             </Row>

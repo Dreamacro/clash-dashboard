@@ -250,7 +250,9 @@ export const apiData = atom({
     default: {
         hostname: '127.0.0.1',
         port: '9090',
-        secret: ''
+        secret: '',
+        path: '',
+        protocol: ''
     }
 })
 
@@ -263,10 +265,12 @@ export function useAPIInfo () {
     }
 
     async function update (info: typeof data) {
-        const { hostname, port, secret } = info
+        const { hostname, port, secret, path, protocol } = info
         setLocalStorageItem('externalControllerAddr', hostname)
         setLocalStorageItem('externalControllerPort', port)
         setLocalStorageItem('secret', secret)
+        setLocalStorageItem('path', path)
+        setLocalStorageItem('protocol', protocol)
         window.location.reload()
     }
 

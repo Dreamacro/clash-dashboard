@@ -36,7 +36,9 @@ export default {
             note: 'Please note that modifying this configuration will only configure Dashboard. Will not modify your Clash configuration file. Please make sure that the external controller address matches the address in the Clash configuration file, otherwise, Dashboard will not be able to connect to Clash.',
             host: 'Host',
             port: 'Port',
-            secret: 'Secret'
+            secret: 'Secret',
+            path: 'Path',
+            protocol: 'Protocol'
         }
     },
     Logs: {

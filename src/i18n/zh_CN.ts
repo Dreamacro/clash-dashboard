@@ -36,7 +36,9 @@ export default {
             note: '请注意，修改该配置项并不会修改你的 Clash 配置文件，请确认修改后的外部控制地址和 Clash 配置文件内的地址一致，否则会导致 Dashboard 无法连接。',
             host: 'Host',
             port: '端口',
-            secret: '密钥'
+            secret: '密钥',
+            path: '路径',
+            protocol: '协议'
         }
     },
     Logs: {
