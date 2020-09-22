@@ -59,7 +59,7 @@ export function Modal (props: ModalProps) {
         return () => document.body.removeChild(portalRef.current)
     }, [])
 
-    function handleMaskClick (e: MouseEvent) {
+    function handleMaskMouseDown (e: MouseEvent) {
         if (e.target === maskRef.current) {
             onClose()
         }
@@ -69,7 +69,7 @@ export function Modal (props: ModalProps) {
         <div
             className={classnames('modal-mask', { 'modal-show': show })}
             ref={maskRef}
-            onClick={handleMaskClick}
+            onMouseDown={handleMaskMouseDown}
         >
             <div
                 className={classnames('modal', `modal-${size}`, className)}
