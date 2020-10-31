@@ -24,6 +24,13 @@ enum Columns {
     Time = 'time'
 }
 
+type TableColumn = Columns | ''
+
+type TableSort = {
+    column: TableColumn
+    asc: boolean
+}
+
 const columnsPair: [string, number][] = [
     [Columns.Host, 260],
     [Columns.Network, 80],
@@ -36,7 +43,8 @@ const columnsPair: [string, number][] = [
     [Columns.Time, 120]
 ]
 const shouldCenter = new Set<string>([Columns.Network, Columns.Type, Columns.Rule, Columns.Speed, Columns.Upload, Columns.Download, Columns.Time])
-const couldSort = new Set<string>([Columns.Host, Columns.Network, Columns.Type, Columns.Rule, Columns.Upload, Columns.Download])
+const sortableColumns = new Set<TableColumn>([Columns.Host, Columns.Network, Columns.Type, Columns.Rule, Columns.Upload, Columns.Download])
+
 
 function formatTraffic (num: number) {
     const s = ['B', 'KB', 'MB', 'GB', 'TB']
@@ -73,11 +81,11 @@ export default function Connections () {
     })
 
     // sort
-    const [sort, setSort] = useObject({
+    const [sort, setSort] = useObject<TableSort>({
         column: '',
         asc: true
     })
-    function handleSort (column: string) {
+    function handleSort (column: TableColumn) {
         if (column === sort.column) {
             sort.asc
                 ? setSort('asc', false)
@@ -122,14 +130,25 @@ export default function Connections () {
                 completed: !!c.completed
             }))
             .sort((a, b) => {
-                if (sort.column !== '') {
-                    const aValue = a[sort.column as keyof typeof a] as string
-                    const bValue = b[sort.column as keyof typeof b] as string
-                    return sort.asc
-                        ? aValue.localeCompare(bValue)
-                        : bValue.localeCompare(aValue)
+                const column = sort.column
+                if (!column) {
+                    return 0
                 }
-                return 0
+
+                const aValue = a[column] as string
+                const bValue = b[column] as string
+
+                if (column === 'download') {
+                    const aSpeed = parseInt(aValue)
+                    const bSpeed = parseInt(bValue)
+                    return sort.asc
+                        ? aSpeed - bSpeed
+                        : bSpeed - aSpeed
+                }
+
+                return sort.asc
+                    ? aValue.localeCompare(bValue)
+                    : bValue.localeCompare(aValue)
             })
     }, [connections, lang, sort.asc, sort.column])
 
@@ -217,8 +236,9 @@ export default function Connections () {
                     <div {...headerGroup.getHeaderGroupProps()} className="connections-header">
                         {
                             headerGroup.headers.map((column, idx) => {
-                                const id = column.id
-                                const handleClick = couldSort.has(id) ? () => handleSort(id) : noop
+                                // Is there a better way to hacking around it?
+                                const id = column.id as TableColumn
+                                const handleClick = sortableColumns.has(id) ? () => handleSort(id) : noop
                                 return (
                                     <div {...column.getHeaderProps()} className="connections-th" onClick={handleClick} key={id}>
                                         { column.render('Header') }
