@@ -42,19 +42,29 @@ const columnsPair: [string, number][] = [
     [Columns.Download, 100],
     [Columns.Time, 120]
 ]
-const shouldCenter = new Set<string>([Columns.Network, Columns.Type, Columns.Rule, Columns.Speed, Columns.Upload, Columns.Download, Columns.Time])
+const centerableColumns = new Set<string>([Columns.Network, Columns.Type, Columns.Rule, Columns.Speed, Columns.Upload, Columns.Download, Columns.Time])
 const sortableColumns = new Set<TableColumn>([Columns.Host, Columns.Network, Columns.Type, Columns.Rule, Columns.Upload, Columns.Download])
 
+// TODO: Is the magnitude of traffic begin with 1000 or 1024?
+const trafficUnit = ['B', 'KB', 'MB', 'GB', 'TB']
+
+function parseTraffic(traffic: string) {
+    let [num, unit] = traffic.split(' ')
+    let idx = trafficUnit.indexOf(unit.toUpperCase())
+    let bit = parseInt(num, 10)
+    while (idx-- > 0)
+        bit *= 1024
+    return bit
+}
 
 function formatTraffic (num: number) {
-    const s = ['B', 'KB', 'MB', 'GB', 'TB']
     let idx = 0
-    while (~~(num / 1024) && idx < s.length) {
+    while (~~(num / 1024) && idx < trafficUnit.length) {
         num /= 1024
         idx++
     }
 
-    return `${idx === 0 ? num : num.toFixed(2)} ${s[idx]}`
+    return `${idx === 0 ? num : num.toFixed(2)} ${trafficUnit[idx]}`
 }
 
 function formatSpeed (upload: number, download: number) {
@@ -135,12 +145,12 @@ export default function Connections () {
                     return 0
                 }
 
-                const aValue = a[column] as string
-                const bValue = b[column] as string
+                const aValue = a[column]
+                const bValue = b[column]
 
-                if (column === 'download') {
-                    const aSpeed = parseInt(aValue)
-                    const bSpeed = parseInt(bValue)
+                if (column === 'download' || column === 'upload') {
+                    const aSpeed = parseTraffic(aValue)
+                    const bSpeed = parseTraffic(bValue)
                     return sort.asc
                         ? aSpeed - bSpeed
                         : bSpeed - aSpeed
@@ -154,11 +164,12 @@ export default function Connections () {
 
     // table
     const columns = useMemo(() => columnsPair.map(
-        c => ({
-            Header: t(`columns.${c[0]}`),
-            accessor: c[0],
-            minWidth: c[1],
-            width: c[1]
+        ([name, width]) => ({
+            width,
+            accessor: name,
+            id: name,
+            minWidth: width,
+            Header: t(`columns.${name}`),
         })
     ), [t])
 
@@ -209,7 +220,7 @@ export default function Connections () {
                     row.cells.map((cell, j) => {
                         const classname = classnames(
                             'connections-block',
-                            { center: shouldCenter.has(cell.column.id), completed: !!(row.original as any).completed }
+                            { center: centerableColumns.has(cell.column.id), completed: !!row.original.completed }
                         )
                         return (
                             <div {...cell.getCellProps()} className={classname} key={j}>
