@@ -105,30 +105,33 @@ export async function getExternalControllerConfig () {
         return {
             hostname: info.host,
             port: info.port,
-            secret: info.secret
+            secret: info.secret,
+            protocol: 'http:'
         }
     }
 
     const hostname = getLocalStorageItem('externalControllerAddr', '127.0.0.1')
     const port = getLocalStorageItem('externalControllerPort', '9090')
     const secret = getLocalStorageItem('secret', '')
+    const protocol = hostname === '127.0.0.1' ? 'http:' : window.location.protocol
 
     if (!hostname || !port) {
         throw new Error('can\'t get hostname or port')
     }
 
-    return { hostname, port, secret }
+    return { hostname, port, secret, protocol }
 }
 
 export const getInstance = createAsyncSingleton(async () => {
     const {
         hostname,
         port,
-        secret
+        secret,
+        protocol
     } = await getExternalControllerConfig()
 
     return axios.create({
-        baseURL: `//${hostname}:${port}`,
+        baseURL: `${protocol}//${hostname}:${port}`,
         headers: secret ? { Authorization: `Bearer ${secret}` } : {}
     })
 })
@@ -242,7 +245,7 @@ export const getLogsStreamReader = createAsyncSingleton(async function () {
     const version = err ? 'unkonwn version' : data.data.version
     const useWebsocket = !!version || true
 
-    const logUrl = `${window.location.protocol}//${externalController.hostname}:${externalController.port}/logs?level=${config['log-level']}`
+    const logUrl = `${externalController.protocol}//${externalController.hostname}:${externalController.port}/logs?level=${config['log-level']}`
     return new StreamReader<Log>({ url: logUrl, bufferLength: 200, token: externalController.secret, useWebsocket })
 })
 
@@ -252,6 +255,6 @@ export const getConnectionStreamReader = createAsyncSingleton(async function () 
     const version = err ? 'unkonwn version' : data.data.version
 
     const useWebsocket = !!version || true
-    const logUrl = `${window.location.protocol}//${externalController.hostname}:${externalController.port}/connections`
+    const logUrl = `${externalController.protocol}//${externalController.hostname}:${externalController.port}/connections`
     return new StreamReader<Snapshot>({ url: logUrl, bufferLength: 200, token: externalController.secret, useWebsocket })
 })

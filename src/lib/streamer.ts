@@ -33,7 +33,7 @@ export class StreamReader<T> {
 
     protected websocketLoop () {
         const url = new URL(this.config.url)
-        url.protocol = window.location.protocol === 'http:' ? 'ws:' : 'wss:'
+        url.protocol = url.protocol === 'http:' ? 'ws:' : 'wss:'
         url.searchParams.set('token', this.config.token ?? '')
 
         const connection = new WebSocket(url.toString())
