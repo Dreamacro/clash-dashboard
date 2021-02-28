@@ -110,6 +110,13 @@ export async function getExternalControllerConfig () {
         }
     }
 
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="external-controller"]')
+    if (meta?.content?.match(/^https?:/)) {
+        const { hostname, port, username, protocol } = new URL(meta.content)
+        const secret = username || getLocalStorageItem('secret', '')
+        return { hostname, port: port || '9090', secret, protocol }
+    }
+
     const hostname = getLocalStorageItem('externalControllerAddr', '127.0.0.1')
     const port = getLocalStorageItem('externalControllerPort', '9090')
     const secret = getLocalStorageItem('secret', '')
