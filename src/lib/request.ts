@@ -122,7 +122,7 @@ export async function getExternalControllerConfig () {
     const hostname = getLocalStorageItem('externalControllerAddr', url?.hostname ?? '127.0.0.1')
     const port = getLocalStorageItem('externalControllerPort', url?.port ?? '9090')
     const secret = getLocalStorageItem('secret', url?.username ?? '')
-    const protocol = url?.protocol ?? hostname === '127.0.0.1' ? 'http:' : window.location.protocol
+    const protocol = hostname === '127.0.0.1' ? 'http:' : url?.protocol ?? window.location.protocol
 
     if (!hostname || !port) {
         throw new Error('can\'t get hostname or port')
