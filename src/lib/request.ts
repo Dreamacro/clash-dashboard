@@ -110,17 +110,19 @@ export async function getExternalControllerConfig () {
         }
     }
 
-    const meta = document.querySelector<HTMLMetaElement>('meta[name="external-controller"]')
-    if (meta?.content?.match(/^https?:/)) {
-        // [protocol]://[secret]@[hostname]:[port]
-        const { hostname, port, username, protocol } = new URL(meta.content)
-        return { hostname, port: port || '9090', secret: username, protocol }
+    let url: URL | undefined;
+    {
+        const meta = document.querySelector<HTMLMetaElement>('meta[name="external-controller"]')
+        if (meta?.content?.match(/^https?:/)) {
+            // [protocol]://[secret]@[hostname]:[port]
+            url = new URL(meta.content)
+        }
     }
 
-    const hostname = getLocalStorageItem('externalControllerAddr', '127.0.0.1')
-    const port = getLocalStorageItem('externalControllerPort', '9090')
-    const secret = getLocalStorageItem('secret', '')
-    const protocol = hostname === '127.0.0.1' ? 'http:' : window.location.protocol
+    const hostname = getLocalStorageItem('externalControllerAddr', url?.hostname ?? '127.0.0.1')
+    const port = getLocalStorageItem('externalControllerPort', url?.port ?? '9090')
+    const secret = getLocalStorageItem('secret', url?.username ?? '')
+    const protocol = url?.protocol ?? hostname === '127.0.0.1' ? 'http:' : window.location.protocol
 
     if (!hostname || !port) {
         throw new Error('can\'t get hostname or port')
