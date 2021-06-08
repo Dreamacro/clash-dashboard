@@ -12,6 +12,10 @@ export function removeLocalStorageItem (key: string) {
 
 export function noop () {}
 
+export function getSearchParam(key: string) {
+    return new URLSearchParams(window.location.search).get(key)
+}
+
 /**
  * to return Promise<[T, Error]>
  * @param {Promise<T>} promise

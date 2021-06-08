@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getLocalStorageItem, to } from '@lib/helper'
+import { getLocalStorageItem, getSearchParam, to } from '@lib/helper'
 import { isClashX, jsBridge } from '@lib/jsBridge'
 import { createAsyncSingleton } from '@lib/asyncSingleton'
 import { Log } from '@models/Log'
@@ -119,10 +119,10 @@ export async function getExternalControllerConfig () {
         }
     }
 
-    const hostname = getLocalStorageItem('externalControllerAddr', url?.hostname ?? '127.0.0.1')
-    const port = getLocalStorageItem('externalControllerPort', url?.port ?? '9090')
-    const secret = getLocalStorageItem('secret', url?.username ?? '')
-    const protocol = hostname === '127.0.0.1' ? 'http:' : (url?.protocol ?? window.location.protocol)
+    const hostname = getSearchParam('host') ?? getLocalStorageItem('externalControllerAddr', url?.hostname ?? '127.0.0.1')
+    const port = getSearchParam('port') ?? getLocalStorageItem('externalControllerPort', url?.port ?? '9090')
+    const secret = getSearchParam('secret') ?? getLocalStorageItem('secret', url?.username ?? '')
+    const protocol = getSearchParam('protocol') ?? hostname === '127.0.0.1' ? 'http:' : (url?.protocol ?? window.location.protocol)
 
     if (!hostname || !port) {
         throw new Error('can\'t get hostname or port')
