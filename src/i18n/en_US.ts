@@ -93,6 +93,7 @@ const EN = {
             opening: 'Open',
             closed: 'Closed',
             closeConnection: 'Close',
+            processName: 'Process Name',
         },
     },
     Proxies: {

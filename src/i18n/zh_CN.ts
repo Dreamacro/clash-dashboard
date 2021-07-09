@@ -93,6 +93,7 @@ const CN = {
             opening: '连接中',
             closed: '已关闭',
             closeConnection: '关闭连接',
+            processName: '进程名',
         },
     },
     Proxies: {

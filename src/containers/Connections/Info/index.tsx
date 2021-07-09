@@ -52,6 +52,10 @@ export function ConnectionInfo (props: ConnectionsInfoProps) {
                 }</span>
             </div>
             <div className="flex my-3">
+                <span className="w-14 font-bold">{t('info.processName')}</span>
+                <span className="font-mono">{props.connection.metadata?.processName}</span>
+            </div>
+            <div className="flex my-3">
                 <span className="w-14 font-bold">{t('info.rule')}</span>
                 <span className="font-mono">
                     { props.connection.rule && `${props.connection.rule}${props.connection.rulePayload && `(${props.connection.rulePayload})`}` }
