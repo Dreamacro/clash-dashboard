@@ -66,6 +66,7 @@ const CN = {
         columns: {
             host: '域名',
             network: '网络',
+            processName: '进程名',
             type: '类型',
             chains: '节点链',
             rule: '规则',

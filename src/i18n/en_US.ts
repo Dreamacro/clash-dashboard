@@ -66,6 +66,7 @@ const EN = {
         columns: {
             host: 'Host',
             network: 'Network',
+            processName: 'Process Name',
             type: 'Type',
             chains: 'Chains',
             rule: 'Rule',
