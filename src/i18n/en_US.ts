@@ -66,6 +66,7 @@ const EN = {
         columns: {
             host: 'Host',
             network: 'Network',
+            processName: 'Process Name',
             type: 'Type',
             chains: 'Chains',
             rule: 'Rule',
@@ -93,6 +94,7 @@ const EN = {
             opening: 'Open',
             closed: 'Closed',
             closeConnection: 'Close',
+            processName: 'Process Name',
         },
     },
     Proxies: {

@@ -17,6 +17,7 @@ import './style.scss'
 
 enum Columns {
     Host = 'host',
+    ProcessName = 'processName',
     Network = 'network',
     Type = 'type',
     Chains = 'chains',
@@ -98,6 +99,7 @@ export default function Connections () {
             speed: { upload: c.uploadSpeed, download: c.downloadSpeed },
             completed: !!c.completed,
             original: c,
+            processName: c.metadata.processName,
         }),
     ), [connections])
     const devices = useMemo(() => {
@@ -110,6 +112,7 @@ export default function Connections () {
     const { x: scrollX } = useScroll(tableRef)
     const columns: Array<TableColumnOption<FormatConnection>> = useMemo(() => [
         { Header: t(`columns.${Columns.Host}`), accessor: Columns.Host, minWidth: 260, width: 260 },
+        { Header: t(`columns.${Columns.ProcessName}`), accessor: Columns.ProcessName, minWidth: 120, width: 120 },
         { Header: t(`columns.${Columns.Network}`), accessor: Columns.Network, minWidth: 80, width: 80 },
         { Header: t(`columns.${Columns.Type}`), accessor: Columns.Type, minWidth: 120, width: 120 },
         { Header: t(`columns.${Columns.Chains}`), accessor: Columns.Chains, minWidth: 200, width: 200 },
